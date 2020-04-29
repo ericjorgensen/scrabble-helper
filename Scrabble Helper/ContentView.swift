@@ -10,9 +10,14 @@ import SwiftUI
 
 struct ContentView: View {
     
+    // The word the player is searching the dictionary for.
     @State private var searchWord: String = ""
+    
+    // Whether or not a match is found in the dictionary for the searched word.
     @State private var wordMatchFound: Bool = false
     
+    
+    // An instance of the DictionaryManager class that loads the dictionary.
     let dictionaryManager = DictionaryManager()
     
     var body: some View {

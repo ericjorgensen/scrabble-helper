@@ -17,6 +17,7 @@
 		070FD78224571E6600940922 /* Scrabble_HelperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070FD78124571E6600940922 /* Scrabble_HelperUITests.swift */; };
 		070FD79124571F5900940922 /* dictionary.txt in Resources */ = {isa = PBXBuildFile; fileRef = 070FD79024571F5900940922 /* dictionary.txt */; };
 		070FD793245749C000940922 /* DictionaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070FD792245749C000940922 /* DictionaryManager.swift */; };
+		07FB26AB2459FE290088D231 /* ScoreTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FB26AA2459FE290088D231 /* ScoreTracker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		070FD78324571E6600940922 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		070FD79024571F5900940922 /* dictionary.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dictionary.txt; sourceTree = "<group>"; };
 		070FD792245749C000940922 /* DictionaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryManager.swift; sourceTree = "<group>"; };
+		07FB26AA2459FE290088D231 /* ScoreTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTracker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				070FD76124571E6300940922 /* SceneDelegate.swift */,
 				070FD76324571E6300940922 /* ContentView.swift */,
 				070FD792245749C000940922 /* DictionaryManager.swift */,
+				07FB26AA2459FE290088D231 /* ScoreTracker.swift */,
 				070FD76524571E6600940922 /* Assets.xcassets */,
 				070FD76A24571E6600940922 /* LaunchScreen.storyboard */,
 				070FD76D24571E6600940922 /* Info.plist */,
@@ -285,6 +288,7 @@
 				070FD76024571E6300940922 /* AppDelegate.swift in Sources */,
 				070FD76224571E6300940922 /* SceneDelegate.swift in Sources */,
 				070FD76424571E6300940922 /* ContentView.swift in Sources */,
+				07FB26AB2459FE290088D231 /* ScoreTracker.swift in Sources */,
 				070FD793245749C000940922 /* DictionaryManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
