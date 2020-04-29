@@ -2,6 +2,7 @@
 //  DictionaryManager.swift
 //  Scrabble Helper
 //
+//  Responsible for loading the Scrabble dictionary from disk
 //  Created by Eric Jorgensen on 4/27/20.
 //  Copyright © 2020 Eric Jorgensen. All rights reserved.
 //
@@ -17,6 +18,7 @@ class DictionaryManager {
         self.dictionary = self.loadDictionary()!
     }
     
+    // Loads the dictionary file from disk and returns as an array of strings.
     func loadDictionary() -> Array<String>? {
         
         if let filepath = Bundle.main.path(forResource: "dictionary", ofType: "txt") {
@@ -33,7 +35,7 @@ class DictionaryManager {
                 return nil
             }
         } else {
-            // example.txt not found!
+            // Text file not found. This is bad.
             return ["Text file not found"]
         }
     
