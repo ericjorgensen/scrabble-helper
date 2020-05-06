@@ -9,9 +9,9 @@
 import Foundation
 
 class ScoreTracker {
-    var scores : [Int]
+    var scores : [Int] = [0]
     
-    init() {
-        self.scores = []
+    func getScore() -> Int {
+        return self.scores.reduce(0, +)
     }
 }

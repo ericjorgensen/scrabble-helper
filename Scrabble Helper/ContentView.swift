@@ -16,9 +16,18 @@ struct ContentView: View {
     // Whether or not a match is found in the dictionary for the searched word.
     @State private var wordMatchFound: Bool = false
     
+    @State private var playerOneScore: Int = 0
+    @State private var playerOneScoreIncrement: Int = 0
+    
+    @State private var playerTwoScore: Int = 0
+    @State private var playerTwoScoreIncrement: Int = 0
+    
     
     // An instance of the DictionaryManager class that loads the dictionary.
     let dictionaryManager = DictionaryManager()
+    
+    let playerOneScoreTracker = ScoreTracker()
+    let playerTwoScoreTracker = ScoreTracker()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,7 +41,8 @@ struct ContentView: View {
                 
             HStack {
                 Button(action: {
-                    if ( self.dictionaryManager.dictionary.contains(self.searchWord.uppercased()) ) {
+                    // Searches dictionary for the word (uppercased, since our dictionary is uppercased and trimming spaces)
+                    if ( self.dictionaryManager.dictionary.contains(self.searchWord.uppercased().trimmingCharacters(in: .whitespacesAndNewlines)) ) {
                         self.wordMatchFound = true
                     } else {
                         
@@ -46,6 +56,59 @@ struct ContentView: View {
                 Text("Score Keeper")
                     .font(.callout)
                     .bold()
+            }.padding(.top)
+            
+            HStack {
+                VStack {
+                    Text("Player One Score")
+                    Text(String(playerOneScore))
+                        .bold()
+                    TextField("Enter score", value: $playerOneScoreIncrement, formatter: NumberFormatter())
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .keyboardType(UIKeyboardType.decimalPad)
+                    
+                    HStack {
+                        Button(action: {
+                            // Add the entry from the text field to Player One's score
+                            print(self.playerOneScoreIncrement)
+                            self.playerOneScoreTracker.scores.append(self.playerOneScoreIncrement)
+                            self.playerOneScore = self.playerOneScoreTracker.getScore()
+                        }) {
+                            Image(systemName: "plus.circle")
+                        }
+                        Spacer()
+                        Button(action: {
+                            
+                        }) {
+                            Image(systemName: "minus.circle")
+                        }
+                    }
+                }
+                
+                Spacer()
+                
+                VStack {
+                    Text("Player Two Score")
+                    Text(String(playerTwoScore))
+                    .bold()
+                    TextField("Enter score", value: $playerTwoScoreIncrement, formatter: NumberFormatter())
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .keyboardType(UIKeyboardType.decimalPad)
+                        
+                        HStack {
+                            Button(action: {
+                                
+                            }) {
+                                Image(systemName: "plus.circle")
+                            }
+                            Spacer()
+                            Button(action: {
+                                
+                            }) {
+                                Image(systemName: "minus.circle")
+                            }
+                        }
+                }
             }
             
         }.padding()
