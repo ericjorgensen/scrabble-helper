@@ -16,11 +16,11 @@ struct ContentView: View {
     // Whether or not a match is found in the dictionary for the searched word.
     @State private var wordMatchFound: Bool = false
     
-    @State private var playerOneScore: Int = 0
-    @State private var playerOneScoreIncrement: Int = 0
-    
-    @State private var playerTwoScore: Int = 0
-    @State private var playerTwoScoreIncrement: Int = 0
+    // Init scorekeeping variables
+    @State private var playerOneScore: Double = 0.0
+    @State private var playerOneScoreIncrement = 0.0
+    @State private var playerTwoScore: Double = 0.0
+    @State private var playerTwoScoreIncrement: Double = 0.0
     
     
     // An instance of the DictionaryManager class that loads the dictionary.
@@ -32,17 +32,19 @@ struct ContentView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Word Lookup")
-                .font(.callout)
+                .font(.headline)
                 .bold()
+                .padding(.bottom)
             TextField("Enter word", text: $searchWord).modifier(ClearButton(searchWord: $searchWord, wordMatchFound: $wordMatchFound))
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .border(wordMatchFound ? Color.green : Color.red, width: 2)
                 .disableAutocorrection(true)
+                .animation(.easeInOut)
                 
             HStack {
                 Button(action: {
                     // Searches dictionary for the word (uppercased, since our dictionary is uppercased and trimming spaces)
-                    if ( self.dictionaryManager.dictionary.contains(self.searchWord.uppercased().trimmingCharacters(in: .whitespacesAndNewlines)) ) {
+                    if ( self.dictionaryManager.searchDictionaryForWord(word: self.searchWord) ) {
                         self.wordMatchFound = true
                     } else {
                         
@@ -54,8 +56,9 @@ struct ContentView: View {
             
             HStack {
                 Text("Score Keeper")
-                    .font(.callout)
+                    .font(.headline)
                     .bold()
+                    .padding(.bottom)
             }.padding(.top)
             
             HStack {
@@ -63,24 +66,16 @@ struct ContentView: View {
                     Text("Player One Score")
                     Text(String(playerOneScore))
                         .bold()
-                    TextField("Enter score", value: $playerOneScoreIncrement, formatter: NumberFormatter())
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(UIKeyboardType.decimalPad)
+                    Slider(value: $playerOneScoreIncrement, in: 1.0...100.0, step: 1)
+                    Text(String(playerOneScoreIncrement))
                     
                     HStack {
                         Button(action: {
                             // Add the entry from the text field to Player One's score
-                            print(self.playerOneScoreIncrement)
                             self.playerOneScoreTracker.scores.append(self.playerOneScoreIncrement)
                             self.playerOneScore = self.playerOneScoreTracker.getScore()
                         }) {
-                            Image(systemName: "plus.circle")
-                        }
-                        Spacer()
-                        Button(action: {
-                            
-                        }) {
-                            Image(systemName: "minus.circle")
+                            Text("Add")
                         }
                     }
                 }
@@ -91,21 +86,16 @@ struct ContentView: View {
                     Text("Player Two Score")
                     Text(String(playerTwoScore))
                     .bold()
-                    TextField("Enter score", value: $playerTwoScoreIncrement, formatter: NumberFormatter())
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(UIKeyboardType.decimalPad)
+                    Slider(value: $playerTwoScoreIncrement, in: 1.0...100.0, step: 1)
+                    Text(String(playerTwoScoreIncrement))
                         
                         HStack {
                             Button(action: {
-                                
+                                // Add the entry from the text field to Player One's score
+                                self.playerTwoScoreTracker.scores.append(self.playerTwoScoreIncrement)
+                                self.playerTwoScore = self.playerTwoScoreTracker.getScore()
                             }) {
-                                Image(systemName: "plus.circle")
-                            }
-                            Spacer()
-                            Button(action: {
-                                
-                            }) {
-                                Image(systemName: "minus.circle")
+                                Text("Add")
                             }
                         }
                 }

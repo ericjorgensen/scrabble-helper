@@ -41,4 +41,12 @@ class DictionaryManager {
     
     }
     
+    func searchDictionaryForWord(word: String) -> Bool {
+        if (self.dictionary.contains(word.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))) {
+            return true
+        }
+        
+        return false
+    }
+    
 }
