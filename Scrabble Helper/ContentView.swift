@@ -52,7 +52,7 @@ struct ContentView: View {
                 }) {
                     Text("Search")
                 }
-            }
+            }.padding(.bottom)
             
             HStack {
                 Text("Score Keeper")
@@ -67,7 +67,10 @@ struct ContentView: View {
                     Text(String(playerOneScore))
                         .bold()
                     Slider(value: $playerOneScoreIncrement, in: 1.0...100.0, step: 1)
-                    Text(String(playerOneScoreIncrement))
+                    HStack{
+                        Text("Score to add:")
+                        Text(String(playerOneScoreIncrement))
+                    }
                     
                     HStack {
                         Button(action: {
@@ -76,6 +79,13 @@ struct ContentView: View {
                             self.playerOneScore = self.playerOneScoreTracker.getScore()
                         }) {
                             Text("Add")
+                        }
+                        
+                        
+                        Button(action: {
+                           
+                        }) {
+                            Text("View Scores")
                         }
                     }
                 }
@@ -97,11 +107,20 @@ struct ContentView: View {
                             }) {
                                 Text("Add")
                             }
+                            
+                            Button(action: {
+                               
+                            }) {
+                                Text("View Scores")
+                            }
                         }
                 }
             }
             
         }.padding()
+        .alert(isPresented: $wordMatchFound) {
+            Alert(title: Text("Dictionary Search"), message: Text("It's a word!"), dismissButton: .default(Text("Cool")))
+        }
     }
 }
 

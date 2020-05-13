@@ -12,7 +12,7 @@ import Foundation
 class DictionaryManager {
     let dictionaryFileName = "dictionary.txt"
     
-    var dictionary : Array<String> = [""]
+    var dictionary : Array<String> = []
     
     init() {
         self.dictionary = self.loadDictionary()!
