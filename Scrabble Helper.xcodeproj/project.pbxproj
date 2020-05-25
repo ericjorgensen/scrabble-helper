@@ -19,6 +19,7 @@
 		070FD793245749C000940922 /* DictionaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070FD792245749C000940922 /* DictionaryManager.swift */; };
 		077E9EBC24659E3500A64433 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077E9EBB24659E3500A64433 /* Extensions.swift */; };
 		077E9EBE2465F08800A64433 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077E9EBD2465F08800A64433 /* Utilities.swift */; };
+		07EBC6C8247460D5002E51C5 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07EBC6C7247460D5002E51C5 /* Score.swift */; };
 		07FB26AB2459FE290088D231 /* ScoreTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FB26AA2459FE290088D231 /* ScoreTracker.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		070FD792245749C000940922 /* DictionaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryManager.swift; sourceTree = "<group>"; };
 		077E9EBB24659E3500A64433 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		077E9EBD2465F08800A64433 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		07EBC6C7247460D5002E51C5 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		07FB26AA2459FE290088D231 /* ScoreTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTracker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 				070FD78F24571EF500940922 /* Data */,
 				070FD76124571E6300940922 /* SceneDelegate.swift */,
 				070FD76324571E6300940922 /* ContentView.swift */,
+				07EBC6C7247460D5002E51C5 /* Score.swift */,
 				077E9EBB24659E3500A64433 /* Extensions.swift */,
 				070FD792245749C000940922 /* DictionaryManager.swift */,
 				07FB26AA2459FE290088D231 /* ScoreTracker.swift */,
@@ -293,6 +296,7 @@
 			files = (
 				070FD76024571E6300940922 /* AppDelegate.swift in Sources */,
 				077E9EBC24659E3500A64433 /* Extensions.swift in Sources */,
+				07EBC6C8247460D5002E51C5 /* Score.swift in Sources */,
 				077E9EBE2465F08800A64433 /* Utilities.swift in Sources */,
 				070FD76224571E6300940922 /* SceneDelegate.swift in Sources */,
 				070FD76424571E6300940922 /* ContentView.swift in Sources */,

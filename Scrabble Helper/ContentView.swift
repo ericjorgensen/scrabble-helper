@@ -29,6 +29,12 @@ struct ContentView: View {
     let playerOneScoreTracker = ScoreTracker()
     let playerTwoScoreTracker = ScoreTracker()
     
+    // A variable to hold the scores that we want to display in the modal
+    @State private var modalScores : [Score] = []
+    
+    // Score modal
+    @State private var scoreModalIsShown: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Word Lookup")
@@ -54,6 +60,8 @@ struct ContentView: View {
                 }
             }.padding(.bottom)
             
+            Divider()
+            
             HStack {
                 Text("Score Keeper")
                     .font(.headline)
@@ -75,15 +83,15 @@ struct ContentView: View {
                     HStack {
                         Button(action: {
                             // Add the entry from the text field to Player One's score
-                            self.playerOneScoreTracker.scores.append(self.playerOneScoreIncrement)
+                            self.playerOneScoreTracker.scores.append(Score(value: self.playerOneScoreIncrement))
                             self.playerOneScore = self.playerOneScoreTracker.getScore()
                         }) {
                             Text("Add")
                         }
                         
-                        
                         Button(action: {
-                           
+                            self.scoreModalIsShown = true
+                            self.modalScores = self.playerOneScoreTracker.scores
                         }) {
                             Text("View Scores")
                         }
@@ -102,14 +110,15 @@ struct ContentView: View {
                         HStack {
                             Button(action: {
                                 // Add the entry from the text field to Player One's score
-                                self.playerTwoScoreTracker.scores.append(self.playerTwoScoreIncrement)
+                                self.playerTwoScoreTracker.scores.append(Score(value:self.playerTwoScoreIncrement))
                                 self.playerTwoScore = self.playerTwoScoreTracker.getScore()
                             }) {
                                 Text("Add")
                             }
                             
                             Button(action: {
-                               
+                               self.scoreModalIsShown = true
+                               self.modalScores = self.playerTwoScoreTracker.scores
                             }) {
                                 Text("View Scores")
                             }
@@ -120,6 +129,9 @@ struct ContentView: View {
         }.padding()
         .alert(isPresented: $wordMatchFound) {
             Alert(title: Text("Dictionary Search"), message: Text("It's a word!"), dismissButton: .default(Text("Cool")))
+        }
+        .sheet(isPresented: self.$scoreModalIsShown) {
+            ScoreModalView(modalScores: self.$modalScores)
         }
     }
 }
@@ -147,6 +159,17 @@ struct ClearButton: ViewModifier {
             
         }
     }
+}
+
+struct ScoreModalView: View {
+    
+    @Binding var modalScores: [Score]
+    
+    var body: some View {
+        List(modalScores) { score in
+                Text(String(score.value))
+            }
+        }
 }
 
 struct ContentView_Previews: PreviewProvider {
