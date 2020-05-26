@@ -8,7 +8,10 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct DictionaryView: View {
+    
+    // An instance of the DictionaryManager class that loads the dictionary.
+    let dictionaryManager = DictionaryManager()
     
     // The word the player is searching the dictionary for.
     @State private var searchWord: String = ""
@@ -16,26 +19,8 @@ struct ContentView: View {
     // Whether or not a match is found in the dictionary for the searched word.
     @State private var wordMatchFound: Bool = false
     
-    // Init scorekeeping variables
-    @State private var playerOneScore: Double = 0.0
-    @State private var playerOneScoreIncrement = 0.0
-    @State private var playerTwoScore: Double = 0.0
-    @State private var playerTwoScoreIncrement: Double = 0.0
-    
-    
-    // An instance of the DictionaryManager class that loads the dictionary.
-    let dictionaryManager = DictionaryManager()
-    
-    let playerOneScoreTracker = ScoreTracker()
-    let playerTwoScoreTracker = ScoreTracker()
-    
-    // A variable to hold the scores that we want to display in the modal
-    @State private var modalScores : [Score] = []
-    
-    // Score modal
-    @State private var scoreModalIsShown: Bool = false
-    
     var body: some View {
+        
         VStack(alignment: .leading) {
             Text("Word Lookup")
                 .font(.headline)
@@ -58,9 +43,33 @@ struct ContentView: View {
                 }) {
                     Text("Search")
                 }
-            }.padding(.bottom)
-            
-            Divider()
+            }
+            .alert(isPresented: $wordMatchFound) {
+                Alert(title: Text("Dictionary Search"), message: Text("It's a word!"), dismissButton: .default(Text("Cool")))
+            }
+        }.padding()
+    }
+}
+
+struct ScoreKeeper: View {
+    
+    // Init scorekeeping variables
+    @State private var playerOneScore: Double = 0.0
+    @State private var playerOneScoreIncrement = 0.0
+    @State private var playerTwoScore: Double = 0.0
+    @State private var playerTwoScoreIncrement: Double = 0.0
+    
+    let playerOneScoreTracker = ScoreTracker()
+    let playerTwoScoreTracker = ScoreTracker()
+    
+    // A variable to hold the scores that we want to display in the modal
+    @State private var modalScores : [Score] = []
+    
+    // Score modal
+    @State private var scoreModalIsShown: Bool = false
+    
+    var body: some View {
+        VStack(alignment: .leading) {
             
             HStack {
                 Text("Score Keeper")
@@ -127,12 +136,29 @@ struct ContentView: View {
             }
             
         }.padding()
-        .alert(isPresented: $wordMatchFound) {
-            Alert(title: Text("Dictionary Search"), message: Text("It's a word!"), dismissButton: .default(Text("Cool")))
-        }
         .sheet(isPresented: self.$scoreModalIsShown) {
             ScoreModalView(modalScores: self.$modalScores)
         }
+    }
+}
+
+struct ContentView: View {
+    
+    var body: some View {
+        
+        TabView {
+            DictionaryView()
+                .tabItem {
+                    Image(systemName: "doc.text.magnifyingglass")
+                    Text("Dictionary")
+                }
+            ScoreKeeper()
+                .tabItem {
+                    Image(systemName: "pencil")
+                    Text("Scores")
+                }
+        }
+        
     }
 }
 
