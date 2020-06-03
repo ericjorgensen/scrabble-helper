@@ -177,7 +177,7 @@ struct ClearButton: ViewModifier {
                     self.searchWord = ""
                     self.wordMatchFound = false
                 }) {
-                    Image(systemName: "delete.left")
+                    Image(systemName: "delete.left.fill")
                     .foregroundColor(Color(UIColor.opaqueSeparator))
                 }
                 .padding(.trailing, 8)
@@ -191,11 +191,18 @@ struct ScoreModalView: View {
     
     @Binding var modalScores: [Score]
     
+    private func onDelete(offsets: IndexSet) {
+        modalScores.remove(atOffsets: offsets)
+    }
+    
     var body: some View {
-        List(modalScores) { score in
+        List {
+            ForEach(modalScores) { score in
                 Text(String(score.value))
             }
+            .onDelete(perform: onDelete)
         }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
