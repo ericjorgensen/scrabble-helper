@@ -8,11 +8,20 @@
 
 import Foundation
 
-class ScoreTracker {
+class ScoreTracker: ObservableObject {
     var scores : [Score] = []
     
-    func getScore() -> Double {
-        return self.scores.reduce(0, { x, y in
+    @Published var playerOneScores : [Score] = []
+    @Published var playerTwoScores : [Score] = []
+    
+    func getPlayerOneScore() -> Double {
+        return self.playerOneScores.reduce(0, { x, y in
+            x + y.value
+        })
+    }
+    
+    func getPlayerTwoScore() -> Double {
+        return self.playerTwoScores.reduce(0, { x, y in
             x + y.value
         })
     }

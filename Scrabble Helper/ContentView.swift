@@ -52,7 +52,7 @@ struct DictionaryView: View {
 }
 
 struct ScoreKeeper: View {
-    
+
     // Init scorekeeping variables
     @State private var playerOneScore: Double = 0.0
     @State private var playerOneScoreIncrement = 0.0
@@ -93,7 +93,7 @@ struct ScoreKeeper: View {
                         Button(action: {
                             // Add the entry from the text field to Player One's score
                             self.playerOneScoreTracker.scores.append(Score(value: self.playerOneScoreIncrement))
-                            self.playerOneScore = self.playerOneScoreTracker.getScore()
+                            self.playerOneScore = scoreTracker.getPlayer()
                         }) {
                             Text("Add")
                         }
