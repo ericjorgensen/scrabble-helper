@@ -9,19 +9,11 @@
 import Foundation
 
 class ScoreTracker: ObservableObject {
-    var scores : [Score] = []
     
-    @Published var playerOneScores : [Score] = []
-    @Published var playerTwoScores : [Score] = []
+    @Published var scores : [Score] = []
     
-    func getPlayerOneScore() -> Double {
-        return self.playerOneScores.reduce(0, { x, y in
-            x + y.value
-        })
-    }
-    
-    func getPlayerTwoScore() -> Double {
-        return self.playerTwoScores.reduce(0, { x, y in
+    func getScore() -> Double {
+        return self.scores.reduce(0, { x, y in
             x + y.value
         })
     }

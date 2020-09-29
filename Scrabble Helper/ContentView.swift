@@ -8,6 +8,26 @@
 
 import SwiftUI
 
+struct ContentView: View {
+    
+    var body: some View {
+        
+        TabView {
+            DictionaryView()
+                .tabItem {
+                    Image(systemName: "doc.text.magnifyingglass")
+                    Text("Dictionary")
+                }
+            ScoreKeeper()
+                .tabItem {
+                    Image(systemName: "pencil")
+                    Text("Scores")
+                }
+        }
+    }
+}
+
+
 struct DictionaryView: View {
     
     // An instance of the DictionaryManager class that loads the dictionary.
@@ -53,20 +73,21 @@ struct DictionaryView: View {
 
 struct ScoreKeeper: View {
 
+    let playerOneScoreTracker = ScoreTracker()
+    let playerTwoScoreTracker = ScoreTracker()
+    
     // Init scorekeeping variables
     @State private var playerOneScore: Double = 0.0
     @State private var playerOneScoreIncrement = 0.0
     @State private var playerTwoScore: Double = 0.0
     @State private var playerTwoScoreIncrement: Double = 0.0
     
-    let playerOneScoreTracker = ScoreTracker()
-    let playerTwoScoreTracker = ScoreTracker()
-    
     // A variable to hold the scores that we want to display in the modal
     @State private var modalScores : [Score] = []
     
     // Score modal
     @State private var scoreModalIsShown: Bool = false
+    @State private var modalSelection: Int = 1
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -93,14 +114,14 @@ struct ScoreKeeper: View {
                         Button(action: {
                             // Add the entry from the text field to Player One's score
                             self.playerOneScoreTracker.scores.append(Score(value: self.playerOneScoreIncrement))
-                            self.playerOneScore = scoreTracker.getPlayer()
+                            self.playerOneScore = self.playerOneScoreTracker.getScore()
                         }) {
                             Text("Add")
                         }
                         
                         Button(action: {
                             self.scoreModalIsShown = true
-                            self.modalScores = self.playerOneScoreTracker.scores
+                            self.modalSelection = 1
                         }) {
                             Text("View Scores")
                         }
@@ -126,8 +147,8 @@ struct ScoreKeeper: View {
                             }
                             
                             Button(action: {
-                               self.scoreModalIsShown = true
-                               self.modalScores = self.playerTwoScoreTracker.scores
+                                self.scoreModalIsShown = true
+                                self.modalSelection = 2
                             }) {
                                 Text("View Scores")
                             }
@@ -137,28 +158,16 @@ struct ScoreKeeper: View {
             
         }.padding()
         .sheet(isPresented: self.$scoreModalIsShown) {
-            ScoreModalView(modalScores: self.$modalScores)
+            
+            if ( self.modalSelection == 1 ) {
+                ScoreModalView().environmentObject(self.playerOneScoreTracker)
+            }
+            
+            if ( self.modalSelection == 2 ) {
+                ScoreModalView().environmentObject(self.playerTwoScoreTracker)
+            }
+            
         }
-    }
-}
-
-struct ContentView: View {
-    
-    var body: some View {
-        
-        TabView {
-            DictionaryView()
-                .tabItem {
-                    Image(systemName: "doc.text.magnifyingglass")
-                    Text("Dictionary")
-                }
-            ScoreKeeper()
-                .tabItem {
-                    Image(systemName: "pencil")
-                    Text("Scores")
-                }
-        }
-        
     }
 }
 
@@ -188,16 +197,15 @@ struct ClearButton: ViewModifier {
 }
 
 struct ScoreModalView: View {
-    
-    @Binding var modalScores: [Score]
+    @EnvironmentObject var scoreTracker: ScoreTracker
     
     private func onDelete(offsets: IndexSet) {
-        modalScores.remove(atOffsets: offsets)
+        scoreTracker.scores.remove(atOffsets: offsets)
     }
     
     var body: some View {
         List {
-            ForEach(modalScores) { score in
+            ForEach(scoreTracker.scores) { score in
                 Text(String(score.value))
             }
             .onDelete(perform: onDelete)
